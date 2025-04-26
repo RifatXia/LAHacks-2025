@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/7946b055-6c8e-40e7-bc86-34bfa8c6a6a0>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 2681c502-e9b2-452f-8946-e247b26aeecc
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 2681c502-e9b2-452f-8946-e247b26aeecc
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 0d09ebe6-6fc1-4712-87a6-570e2d6f70b3
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/0d09ebe6-6fc1-4712-87a6-570e2d6f70b3>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 72d93dba-2b6e-4634-bf1a-6a3635418b23
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    image: false
+    interactable: false
+    textInput: false
+    textOutput: false
+    ttsComponent: false
+  ScriptTypesHidden:
+    {}
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  DefaultScriptInputs:
+    - textInput: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      textOutput: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      image: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      interactable: !<MappingBased.Interactable> 00000000-0000-0000-0000-000000000000
+      ttsComponent: !<MappingBased.TextToSpeechOpenAI> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Component.Text textInput
+    - // @input Component.Text textOutput
+    - // @input Component.Image image
+    - // @input Interactable interactable
+    - // @input TextToSpeechOpenAI ttsComponent

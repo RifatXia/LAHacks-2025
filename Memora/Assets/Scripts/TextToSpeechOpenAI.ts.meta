@@ -1,0 +1,45 @@
+- !<AssetImportMetadata/0844e0da-12e6-4d4c-b524-c95a7f60c2a7>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 3018ecc6-7bb5-4c74-8ab9-8cfc295e2be2
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 3018ecc6-7bb5-4c74-8ab9-8cfc295e2be2
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 1a6b34fa-61f0-4002-8d58-47e56ed8a2ae
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/1a6b34fa-61f0-4002-8d58-47e56ed8a2ae>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: f7829c42-7118-4cc5-a33b-7bd911525210
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    audioComponent: false
+    audioOutputAsset: false
+    voice: false
+  ScriptTypesHidden:
+    {}
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  DefaultScriptInputs:
+    - audioComponent: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      audioOutputAsset: !<reference.Asset> 00000000-0000-0000-0000-000000000000
+      voice: alloy
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Component.AudioComponent audioComponent
+    - // @input Asset.Asset audioOutputAsset
+    - '// @input string voice = "alloy" {"widget":"combobox", "values":[{"label":"Alloy", "value":"alloy"}, {"label":"Echo", "value":"echo"}, {"label":"Fable", "value":"fable"}, {"label":"Onyx", "value":"onyx"}, {"label":"Nova", "value":"nova"}, {"label":"Shimmer", "value":"shimmer"}]}'
