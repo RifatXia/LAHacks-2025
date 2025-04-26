@@ -1,11 +1,33 @@
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+# from fastapi import FastAPI
+
+# app = FastAPI()
+
+# from pymongo.mongo_client import MongoClient
+# from pymongo.server_api import ServerApi 
+
+# uri = "mongodb+srv://rifatxia:hackathon123@cluster0.4alho2f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+# # Create a new client and connect to the server
+# client = MongoClient(uri)
+
+# # Send a ping to confirm a successful connection
+# try:
+#     client.admin.command('ping')
+#     print("Pinged your deployment. You successfully connected to MongoDB!")
+# except Exception as e:
+#     print(e)
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 from datetime import datetime
 import pytz
+from gtts import gTTS
+from io import BytesIO
+import openai
 
 # Load environment variables from a .env file (for API key)
 load_dotenv()
@@ -46,7 +68,7 @@ if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY environment variable not set.")
 
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash-latest')
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 # --- FastAPI App Setup ---
 app = FastAPI()
@@ -69,7 +91,7 @@ async def chat_endpoint(chat_message: ChatMessage):
 
     # Construct the full prompt for Gemini
     full_prompt = f"""You are an AI assistant helping a dementia patient. Use only the information below to answer the user's question.
-If you don't know the answer, say you don't know. Be natural, direct, and supportive. 
+If you don't know the answer, say you don't know. Be natural, direct, and supportive without extra information
 If the current time is required for any answer, use this: {current_time_in_LA} whenever required. Be more natural, you dont have to mention the current time
 
 Patient Information:
