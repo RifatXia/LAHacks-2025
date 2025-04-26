@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Background -->
+  <circle cx="150" cy="150" r="150" fill="#FFF" opacity="0"/>
+  <!-- Face -->
+  <ellipse cx="150" cy="135" rx="60" ry="75" fill="#E9B37C"/>
+  <!-- Hair (blonde) -->
+  <path d="M95 100c0 0-20-50 30-65 50-15 80 15 85 30 5 15 10 40 0 60s-20 30-20 30l-10-15c0 0 10-20 10-50s-30-50-60-30c-30 20-25 45-25 45L95 100z" fill="#F2D2A4"/>
+  <!-- Pink Streak -->
+  <path d="M205 105c0 0-5 10-10 25s-5 40-5 40l15-50c0 0 10-5 15-5s15 10 15 15-5 30-15 40-30 15-30 15l15-80z" fill="#EF5998"/>
+  <!-- Glasses -->
+  <path d="M100 120c-5 0-10 5-10 10 0 10 10 20 25 20s25-10 25-20c0-5-5-10-10-10h-30z M160 120c-5 0-10 5-10 10 0 10 10 20 25 20s25-10 25-20c0-5-5-10-10-10h-30z" fill="#000" opacity="0.2"/>
+  <path d="M100 120c-5 0-10 5-10 10 0 10 10 20 25 20s25-10 25-20c0-5-5-10-10-10h-30z M160 120c-5 0-10 5-10 10 0 10 10 20 25 20s25-10 25-20c0-5-5-10-10-10h-30z" fill="none" stroke="#333" stroke-width="3"/>
+  <line x1="140" y1="130" x2="150" y2="130" stroke="#333" stroke-width="3"/>
+  <!-- Eyes -->
+  <ellipse cx="115" cy="130" rx="5" ry="7" fill="#4A3A2A"/>
+  <ellipse cx="175" cy="130" rx="5" ry="7" fill="#4A3A2A"/>
+  <!-- Mouth -->
+  <path d="M125 165c10 10 30 10 40 0" fill="none" stroke="#DD356E" stroke-width="5" stroke-linecap="round"/>
+  <!-- Purple Hoodie -->
+  <path d="M70 180c0 0 20 40 80 40s80-40 80-40l20 20c0 0-30 50-100 50S50 200 50 200L70 180z" fill="#8D7AB5"/>
+  <path d="M90 190c0 0 15 15 60 15s60-15 60-15" fill="none" stroke="#7A6996" stroke-width="5"/>
+  <!-- White T-shirt -->
+  <path d="M100 200c0 0 20 20 50 20s50-20 50-20v50H100V200z" fill="#F0F0F0"/>
+  <!-- Arms -->
+  <path d="M60 200c0 0-20 10-30 30s-10 30-10 30h40L60 200z M230 200c0 0 20 10 30 30s10 30 10 30h-40L230 200z" fill="#8D7AB5"/>
+  <!-- Hands -->
+  <path d="M60 260c0 0-5 10-15 15s-20 5-20 5l5 10c0 0 15 0 25-5s15-15 15-15L60 260z M230 260c0 0 5 10 15 15s20 5 20 5l-5 10c0 0-15 0-25-5s-15-15-15-15L230 260z" fill="#E9B37C"/>
+</svg> 
