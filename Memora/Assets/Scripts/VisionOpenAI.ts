@@ -8,7 +8,7 @@ export class VisionOpenAI extends BaseScriptComponent {
   // @input interactable: Interactable;
   @input ttsComponent: TextToSpeechOpenAI;
 
-  apiKey: string = "";
+  apiKey: string = "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";
 
   // Remote service module for fetching data
   private remoteServiceModule: RemoteServiceModule = require("LensStudio:RemoteServiceModule");
