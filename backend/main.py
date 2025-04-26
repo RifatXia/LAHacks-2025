@@ -55,9 +55,9 @@ Daily Schedule:
 10:00 PM: Sleep
 
 Family Members:
-Father: David Mitchell (55 years old) – Retired School Principal
-Mother: Laura Mitchell (53 years old) – Freelance Writer
-Younger Sister: Emily Mitchell (22 years old) – College Student (Major in Graphic Design)
+Father: David Mitchell (82 years old) – Retired School Principal
+Mother: Laura Mitchell (80 years old) – Retired School Principal
+Younger Sister: Emily Mitchell (55 years old) – Retired School Principal
 
 Pet: Max (Golden Retriever, 4 years old)
 """

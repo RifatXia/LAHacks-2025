@@ -293,7 +293,7 @@
   PrefabRemaps:
     []
   Name: Scenes
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform:
     position: {x: 0.000000, y: -1.251475, z: 0.000000}
@@ -492,9 +492,9 @@
   Enabled: true
   Layers: 1
   LocalTransform:
-    position: {x: -0.000513, y: 1.704066, z: -1.481361}
-    rotation: {x: 180.000000, y: 180.000000, z: 180.000000}
-    scale: {x: 0.308397, y: 0.500000, z: 0.500000}
+    position: {x: -26.457144, y: -0.428136, z: -3.637144}
+    rotation: {x: 0.000000, y: -0.000000, z: 0.000000}
+    scale: {x: 0.100000, y: 0.100000, z: 0.100000}
     hasSegmentScaleCompensation: false
   Children:
     - !<own> 4281aae1-fbfa-4de2-a8cc-00f5377a3959
@@ -729,7 +729,7 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 25
+  FontSize: 100
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -7.500000
@@ -737,7 +737,7 @@
     right: 7.500000
     top: 2.250000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -1313,9 +1313,9 @@
   SortingType: Hierarchy
   WorldSpaceRect:
     left: -15.000000
-    bottom: -10.000000
+    bottom: -25.000000
     right: 15.000000
-    top: 10.000000
+    top: 25.000000
 - !<SceneObject/4fdc2b5a-6036-4b71-b359-849eb59e627f>
   PrefabRemaps:
     []
@@ -1488,7 +1488,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: "What is you see?"
+  Text: ""
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1582,6 +1582,22 @@
     - !<own> 1d6b98ad-0211-4139-ad0b-d174ba38e855
   Components:
     []
+- !<SceneObject/660a3807-0364-4d80-bbd1-81f76039c02a>
+  PrefabRemaps:
+    []
+  Name: Bitmoji 3D
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: -26.457142, y: -11.487351, z: -0.000490}
+    rotation: {x: 179.970993, y: 89.980217, z: 179.970993}
+    scale: {x: 0.100000, y: 0.100000, z: 0.100000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> a8e5a3b8-310d-49fe-a916-cf16027ffc54
+    - !<own> ff0c2465-710a-4978-954a-e7d3da4ee239
 - !<SceneObject/6a70e911-621f-47a4-a75d-66b5a9cea143>
   PrefabRemaps:
     []
@@ -2555,6 +2571,34 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/a8e5a3b8-310d-49fe-a916-cf16027ffc54>
+  PrefabRemaps:
+    []
+  Name: Bitmoji 3D
+  Enabled: true
+  ScriptAsset: !<reference> 7a3c78c1-4ff4-41a1-9f38-a2b9e6360f03
+  ScriptInputsDefault:
+    bitmojiType: true
+    friendsComponent: true
+    friendIndex: true
+    mixamoAnimation: true
+    autoDownload: true
+    castShadow: true
+    renderOrder: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      bitmojiType: 0
+      friendsComponent: !<reference.Component> 00000000-0000-0000-0000-000000000000
+      friendIndex: 0
+      mixamoAnimation: false
+      autoDownload: true
+      castShadow: true
+      renderOrder: 0
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/a91b757f-a4eb-4c3c-99fd-3b2bf98e6857>
   PrefabRemaps:
     []
@@ -3171,7 +3215,7 @@
       isContentInteractable: false
       allowTranslation: true
       minimumSize: !<Vec2> {x: 10.000000, y: 10.000000}
-      maximumSize: !<Vec2> {x: 20.000000, y: 20.000000}
+      maximumSize: !<Vec2> {x: 20.000000, y: 50.000000}
       useBillboarding: true
       xOnTranslate: true
       xAlways: false
@@ -3462,6 +3506,7 @@
   Children:
     - !<own> 0bb98857-617f-4557-97e8-c1d329b59006
     - !<own> 1be840be-b393-41dc-9ca2-c5b98b21756f
+    - !<own> 660a3807-0364-4d80-bbd1-81f76039c02a
   Components:
     - !<own> 36f26754-8de6-4247-aa7f-4f8d86c38553
     - !<own> e81dac60-3069-4257-a570-95aee9517ab7
@@ -3646,3 +3691,57 @@
     - !<own> 2f0c4aef-e12a-4198-b679-6a8760f24776
   Components:
     []
+- !<ScriptComponent/ff0c2465-710a-4978-954a-e7d3da4ee239>
+  PrefabRemaps:
+    []
+  Name: BitmojiFaceAnimator
+  Enabled: true
+  ScriptAsset: !<reference> 75e2605f-b602-4245-b239-233c6089f07a
+  ScriptInputsDefault:
+    mode: true
+    alwaysReturnToIdle: true
+    defaultTransitionLength: true
+    minMaxTime: true
+    duration: true
+    loopSequence: true
+    timestamps: true
+    probAmused: true
+    probAngry: true
+    probConfused: true
+    probCrying: true
+    probCurious: true
+    probHappy: true
+    probIdle: true
+    probLaughing: true
+    probSad: true
+    probScared: true
+    debug: true
+    textComponent: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      mode: 0
+      defaultAnimation: Happy
+      alwaysReturnToIdle: true
+      defaultTransitionLength: 0.200000
+      minMaxTime: !<Vec2> {x: 0.000000, y: 0.000000}
+      duration: !<float> 10.000000
+      loopSequence: true
+      timestamps:
+        []
+      probAmused: !<float> 1.000000
+      probAngry: !<float> 1.000000
+      probConfused: !<float> 0.000000
+      probCrying: !<float> 0.000000
+      probCurious: !<float> 1.000000
+      probHappy: !<float> 1.000000
+      probIdle: !<float> 1.000000
+      probLaughing: !<float> 1.000000
+      probSad: !<float> 0.000000
+      probScared: !<float> 0.000000
+      debug: false
+      textComponent: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}

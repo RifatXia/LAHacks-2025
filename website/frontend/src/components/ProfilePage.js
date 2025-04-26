@@ -3,29 +3,49 @@ import memo1 from '../assets/memo1.jpg';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
+    name: 'Ethan Mitchell',
+    email: 'ethan.mitchell@example.com',
+    age: 63,
+    gender: 'Male',
     joinDate: 'January 15, 2025',
     profilePicture: memo1,
-    bio: 'I love using Mnemosyne to keep track of my memories and important people in my life.',
+    bio: 'Software developer with over 30 years of experience. I enjoy listening to podcasts during my commute and working on side projects in the evening.',
     stats: {
       memories: 24,
       connections: 12,
       conversations: 37
-    },
-    preferences: {
-      darkMode: false,
-      notifications: true,
-      emailUpdates: false,
-      autoBackup: true
     }
   });
+  
+  const [schedule, setSchedule] = useState([
+    { id: 1, time: '6:30 AM - 7:00 AM', activity: 'Wake up, quick stretching, morning hygiene' },
+    { id: 2, time: '7:00 AM - 7:45 AM', activity: 'Light breakfast (coffee + oatmeal) and news reading' },
+    { id: 3, time: '8:00 AM - 9:00 AM', activity: 'Commute to work (listens to podcasts)' },
+    { id: 4, time: '9:00 AM - 12:30 PM', activity: 'Work (Software Development tasks, coding, team stand-up meeting at 10:00 AM)' },
+    { id: 5, time: '12:30 PM - 1:30 PM', activity: 'Lunch break (usually eats with colleagues at nearby café)' },
+    { id: 6, time: '1:30 PM - 5:30 PM', activity: 'Work (client meetings, feature development, code reviews)' },
+    { id: 7, time: '5:30 PM - 6:30 PM', activity: 'Gym workout (weight training + cardio)' },
+    { id: 8, time: '6:30 PM - 7:00 PM', activity: 'Commute back home' },
+    { id: 9, time: '7:00 PM - 8:00 PM', activity: 'Dinner (home-cooked or takeout) while watching TV series' },
+    { id: 10, time: '8:00 PM - 9:30 PM', activity: 'Personal time (gaming, reading, working on side projects)' },
+    { id: 11, time: '9:30 PM - 10:00 PM', activity: 'Prepare for the next day (lay out clothes, light journaling)' },
+    { id: 12, time: '10:00 PM', activity: 'Sleep' }
+  ]);
   
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
     name: user.name,
     email: user.email,
+    age: user.age,
+    gender: user.gender,
     bio: user.bio
+  });
+
+  const [isAddingScheduleItem, setIsAddingScheduleItem] = useState(false);
+  const [editingScheduleItem, setEditingScheduleItem] = useState(null);
+  const [scheduleForm, setScheduleForm] = useState({
+    time: '',
+    activity: ''
   });
 
   const toggleEditing = () => {
@@ -35,6 +55,8 @@ const ProfilePage = () => {
         ...user,
         name: editForm.name,
         email: editForm.email,
+        age: editForm.age,
+        gender: editForm.gender,
         bio: editForm.bio
       });
     } else {
@@ -42,6 +64,8 @@ const ProfilePage = () => {
       setEditForm({
         name: user.name,
         email: user.email,
+        age: user.age,
+        gender: user.gender,
         bio: user.bio
       });
     }
@@ -56,14 +80,65 @@ const ProfilePage = () => {
     });
   };
 
-  const togglePreference = (preference) => {
-    setUser({
-      ...user,
-      preferences: {
-        ...user.preferences,
-        [preference]: !user.preferences[preference]
-      }
+  const handleScheduleFormChange = (e) => {
+    const { name, value } = e.target;
+    setScheduleForm({
+      ...scheduleForm,
+      [name]: value
     });
+  };
+
+  const addScheduleItem = () => {
+    if (!scheduleForm.time || !scheduleForm.activity) return;
+    
+    const newItem = {
+      id: Date.now(),
+      time: scheduleForm.time,
+      activity: scheduleForm.activity
+    };
+    
+    setSchedule([...schedule, newItem]);
+    setScheduleForm({ time: '', activity: '' });
+    setIsAddingScheduleItem(false);
+  };
+
+  const updateScheduleItem = () => {
+    if (!scheduleForm.time || !scheduleForm.activity || !editingScheduleItem) return;
+    
+    const updatedSchedule = schedule.map(item => 
+      item.id === editingScheduleItem.id 
+        ? { ...item, time: scheduleForm.time, activity: scheduleForm.activity }
+        : item
+    );
+    
+    setSchedule(updatedSchedule);
+    setScheduleForm({ time: '', activity: '' });
+    setEditingScheduleItem(null);
+  };
+
+  const startEditScheduleItem = (item) => {
+    setEditingScheduleItem(item);
+    setScheduleForm({
+      time: item.time,
+      activity: item.activity
+    });
+    setIsAddingScheduleItem(false);
+  };
+
+  const deleteScheduleItem = (id) => {
+    const updatedSchedule = schedule.filter(item => item.id !== id);
+    setSchedule(updatedSchedule);
+    
+    if (editingScheduleItem && editingScheduleItem.id === id) {
+      setEditingScheduleItem(null);
+      setScheduleForm({ time: '', activity: '' });
+    }
+  };
+
+  const cancelScheduleEdit = () => {
+    setEditingScheduleItem(null);
+    setIsAddingScheduleItem(false);
+    setScheduleForm({ time: '', activity: '' });
   };
 
   // Styles
@@ -141,7 +216,10 @@ const ProfilePage = () => {
   const sectionTitleStyle = {
     borderBottom: '1px solid #e0e0e0',
     paddingBottom: '0.5rem',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   };
 
   const fieldGroupStyle = {
@@ -179,38 +257,75 @@ const ProfilePage = () => {
     fontWeight: 'bold'
   };
 
-  const switchContainerStyle = {
+  const smallButtonStyle = {
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    border: 'none',
+    padding: '0.5rem 0.75rem',
+    borderRadius: '4px',
+    fontSize: '0.9rem',
+    cursor: 'pointer',
+    marginLeft: '0.5rem'
+  };
+
+  const scheduleItemStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0.75rem 0',
+    padding: '0.75rem',
     borderBottom: '1px solid #f0f0f0'
   };
 
-  const switchLabelStyle = {
-    fontWeight: 'normal'
+  const scheduleTimeStyle = {
+    fontWeight: 'bold',
+    minWidth: '150px'
   };
 
-  const switchStyle = (active) => ({
-    width: '50px',
-    height: '26px',
-    backgroundColor: active ? '#4a90e2' : '#ccc',
-    borderRadius: '13px',
-    position: 'relative',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s'
-  });
+  const scheduleActivityStyle = {
+    flex: 1,
+    padding: '0 1rem'
+  };
 
-  const switchHandleStyle = (active) => ({
-    width: '20px',
-    height: '20px',
-    backgroundColor: 'white',
-    borderRadius: '50%',
-    position: 'absolute',
-    top: '3px',
-    left: active ? '27px' : '3px',
-    transition: 'left 0.3s'
-  });
+  const scheduleActionStyle = {
+    display: 'flex',
+    gap: '0.5rem'
+  };
+
+  const iconButtonStyle = {
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#666',
+    fontSize: '1.2rem'
+  };
+
+  const scheduleFormStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    padding: '1rem',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '4px',
+    marginBottom: '1rem'
+  };
+
+  const scheduleFormRowStyle = {
+    display: 'flex',
+    gap: '1rem'
+  };
+
+  const addScheduleButtonStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    border: 'none',
+    padding: '0.5rem 1rem',
+    borderRadius: '4px',
+    fontSize: '0.9rem',
+    cursor: 'pointer'
+  };
 
   return (
     <div style={pageStyle}>
@@ -227,6 +342,7 @@ const ProfilePage = () => {
           />
           <div style={userInfoStyle}>
             <h3 style={nameStyle}>{user.name}</h3>
+            <p>{user.gender}, {user.age} years old</p>
             <p>{user.email}</p>
             <p>Member since: {user.joinDate}</p>
             <button 
@@ -280,6 +396,28 @@ const ProfilePage = () => {
             />
           </div>
           <div style={fieldGroupStyle}>
+            <label style={labelStyle} htmlFor="age">Age</label>
+            <input 
+              type="number" 
+              id="age" 
+              name="age" 
+              value={editForm.age} 
+              onChange={handleChange} 
+              style={inputStyle} 
+            />
+          </div>
+          <div style={fieldGroupStyle}>
+            <label style={labelStyle} htmlFor="gender">Gender</label>
+            <input 
+              type="text" 
+              id="gender" 
+              name="gender" 
+              value={editForm.gender} 
+              onChange={handleChange} 
+              style={inputStyle} 
+            />
+          </div>
+          <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="bio">Bio</label>
             <textarea 
               id="bio" 
@@ -298,42 +436,87 @@ const ProfilePage = () => {
       )}
 
       <div style={sectionStyle}>
-        <h3 style={sectionTitleStyle}>Preferences</h3>
-        <div style={switchContainerStyle}>
-          <label style={switchLabelStyle}>Dark Mode</label>
-          <div 
-            style={switchStyle(user.preferences.darkMode)} 
-            onClick={() => togglePreference('darkMode')}
-          >
-            <div style={switchHandleStyle(user.preferences.darkMode)}></div>
-          </div>
+        <div style={sectionTitleStyle}>
+          <h3 style={{margin: 0}}>Daily Schedule</h3>
+          {!isAddingScheduleItem && !editingScheduleItem && (
+            <button 
+              style={addScheduleButtonStyle}
+              onClick={() => setIsAddingScheduleItem(true)}
+            >
+              <span>+</span> Add Activity
+            </button>
+          )}
         </div>
-        <div style={switchContainerStyle}>
-          <label style={switchLabelStyle}>Push Notifications</label>
-          <div 
-            style={switchStyle(user.preferences.notifications)} 
-            onClick={() => togglePreference('notifications')}
-          >
-            <div style={switchHandleStyle(user.preferences.notifications)}></div>
+
+        {(isAddingScheduleItem || editingScheduleItem) && (
+          <div style={scheduleFormStyle}>
+            <h4>{editingScheduleItem ? 'Edit Activity' : 'Add New Activity'}</h4>
+            <div style={scheduleFormRowStyle}>
+              <div style={{flex: 1}}>
+                <label style={labelStyle} htmlFor="time">Time</label>
+                <input 
+                  type="text" 
+                  id="time" 
+                  name="time" 
+                  placeholder="e.g. 8:00 AM - 9:00 AM"
+                  value={scheduleForm.time} 
+                  onChange={handleScheduleFormChange} 
+                  style={inputStyle} 
+                />
+              </div>
+              <div style={{flex: 2}}>
+                <label style={labelStyle} htmlFor="activity">Activity</label>
+                <input 
+                  type="text" 
+                  id="activity" 
+                  name="activity" 
+                  placeholder="Describe the activity"
+                  value={scheduleForm.activity} 
+                  onChange={handleScheduleFormChange} 
+                  style={inputStyle} 
+                />
+              </div>
+            </div>
+            <div style={{display: 'flex', gap: '1rem', justifyContent: 'flex-end'}}>
+              <button 
+                style={{...smallButtonStyle, backgroundColor: '#ccc'}}
+                onClick={cancelScheduleEdit}
+              >
+                Cancel
+              </button>
+              <button 
+                style={smallButtonStyle}
+                onClick={editingScheduleItem ? updateScheduleItem : addScheduleItem}
+              >
+                {editingScheduleItem ? 'Update' : 'Add'}
+              </button>
+            </div>
           </div>
-        </div>
-        <div style={switchContainerStyle}>
-          <label style={switchLabelStyle}>Email Updates</label>
-          <div 
-            style={switchStyle(user.preferences.emailUpdates)} 
-            onClick={() => togglePreference('emailUpdates')}
-          >
-            <div style={switchHandleStyle(user.preferences.emailUpdates)}></div>
-          </div>
-        </div>
-        <div style={switchContainerStyle}>
-          <label style={switchLabelStyle}>Auto Backup</label>
-          <div 
-            style={switchStyle(user.preferences.autoBackup)} 
-            onClick={() => togglePreference('autoBackup')}
-          >
-            <div style={switchHandleStyle(user.preferences.autoBackup)}></div>
-          </div>
+        )}
+
+        <div>
+          {schedule.map(item => (
+            <div key={item.id} style={scheduleItemStyle}>
+              <div style={scheduleTimeStyle}>{item.time}</div>
+              <div style={scheduleActivityStyle}>{item.activity}</div>
+              <div style={scheduleActionStyle}>
+                <button 
+                  style={iconButtonStyle}
+                  onClick={() => startEditScheduleItem(item)}
+                  title="Edit"
+                >
+                  ✏️
+                </button>
+                <button 
+                  style={iconButtonStyle}
+                  onClick={() => deleteScheduleItem(item.id)}
+                  title="Delete"
+                >
+                  🗑️
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
