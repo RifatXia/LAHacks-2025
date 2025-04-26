@@ -1,0 +1,45 @@
+- !<AssetImportMetadata/f7d1402a-ded2-4ebe-8997-ac951975d999>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> c2de272c-2e7c-4ea2-9545-806e23a7cc3c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> c2de272c-2e7c-4ea2-9545-806e23a7cc3c
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2cdec18f-4db1-4139-aab3-29ee046d86fa
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2cdec18f-4db1-4139-aab3-29ee046d86fa>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 33e16103-62be-489d-b228-c55c9b297270
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    textInput: false
+    textOutput: false
+    visionOpenAIScript: false
+  ScriptTypesHidden:
+    {}
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  DefaultScriptInputs:
+    - textInput: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      textOutput: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      visionOpenAIScript: !<MappingBased.VisionOpenAI> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Component.Text textInput
+    - // @input Component.Text textOutput
+    - // @input VisionOpenAI visionOpenAIScript

@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/c40db399-c9f3-4af5-a77d-bfdea9d8cbe0>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> a4713686-e539-4f9e-8957-6b993880bb24
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> a4713686-e539-4f9e-8957-6b993880bb24
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> 998b0b2d-f29d-4341-a736-fbd787de05f7
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptComponent/4ea1c46b-0288-4c90-909e-c6c65abc949f>
+  PrefabRemaps:
+    []
+  Name: CameraAPI
+  Enabled: true
+  ScriptAsset: !<reference> df872fa6-dd13-44b9-8480-4ad64e1d27bd
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      uiImage: !<reference.Image> b6830d7b-c60d-4eb4-9694-c48f8572cdd0
+  ScriptTypes:
+    "":
+      {}
+- !<ObjectPrefab/4f25c7ac-d665-4839-adf3-44199f530fd4>
+  PackagePath: ""
+  objects:
+    - !<own> da98628f-84a7-4a42-8ffd-f378369c8fd3
+  LazyLoading: false
+  RetainAssets: true
+- !<ObjectPrefabAssetData/998b0b2d-f29d-4341-a736-fbd787de05f7>
+  SourceRemaps:
+    - a4713686-e539-4f9e-8957-6b993880bb24: 4f25c7ac-d665-4839-adf3-44199f530fd4
+    - be97f608-d5a2-426e-9f1a-9993f202a82d: da98628f-84a7-4a42-8ffd-f378369c8fd3
+    - fe66b212-969c-46ca-9458-49331fddccf6: 4ea1c46b-0288-4c90-909e-c6c65abc949f
+  SourceState: !<own> 4f25c7ac-d665-4839-adf3-44199f530fd4
+- !<SceneObject/da98628f-84a7-4a42-8ffd-f378369c8fd3>
+  PrefabRemaps:
+    []
+  Name: CameraFeedHandler
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 4ea1c46b-0288-4c90-909e-c6c65abc949f
