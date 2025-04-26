@@ -33,7 +33,7 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!file || !date || !description) {
-      alert('Please fill all fields');
+      alert('Please fill all required fields');
       return;
     }
 
@@ -256,26 +256,25 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
         </div>
 
         <div style={formGroupStyle}>
-          <label htmlFor="date" style={labelStyle}>Date:</label>
+          <label htmlFor="date" style={labelStyle}>Date *</label>
           <input 
             type="date" 
             id="date" 
             value={date} 
             onChange={(e) => setDate(e.target.value)} 
+            style={inputStyle} 
             required 
-            style={inputStyle}
           />
         </div>
 
         <div style={formGroupStyle}>
-          <label htmlFor="description" style={labelStyle}>Description:</label>
+          <label htmlFor="description" style={labelStyle}>Description *</label>
           <textarea 
             id="description" 
             value={description} 
             onChange={(e) => setDescription(e.target.value)} 
-            placeholder="Write a description about your memory" 
-            required
-            style={textareaStyle}
+            style={textareaStyle} 
+            required 
           />
         </div>
 
