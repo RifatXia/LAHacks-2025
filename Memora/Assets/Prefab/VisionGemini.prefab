@@ -1,0 +1,55 @@
+- !<ObjectPrefab/d2776665-5629-4b7a-9328-a07b3d3f513c>
+  PackagePath: ""
+  objects:
+    - !<own> dce3477c-21ca-402d-93e9-3ad51f1268aa
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/8ece27c5-432d-45cc-af6e-99bf535ea533>
+  PrefabRemaps:
+    []
+  Name: VisionGemini Controller
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> facddee2-99d4-4714-b8e3-fad563b2e665
+- !<SceneObject/dce3477c-21ca-402d-93e9-3ad51f1268aa>
+  PrefabRemaps:
+    []
+  Name: VisionGemini
+  Enabled: false
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 8ece27c5-432d-45cc-af6e-99bf535ea533
+  Components:
+    []
+- !<ScriptComponent/facddee2-99d4-4714-b8e3-fad563b2e665>
+  PrefabRemaps:
+    []
+  Name: VisionOpenAI
+  Enabled: true
+  ScriptAsset: !<reference> 2681c502-e9b2-452f-8946-e247b26aeecc
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      textInput: !<reference.Text> 6276b69e-3cbe-4611-9b22-e77095f9094b
+      textOutput: !<reference.Text> 3142c4e0-b39d-4e77-8b2c-cd27e33a6ac8
+      image: !<reference.Image> b6830d7b-c60d-4eb4-9694-c48f8572cdd0
+      ttsComponent: !<MappingBased.TextToSpeechOpenAI> aea51dca-676c-4782-a2ed-e6193c4ba21e
+  ScriptTypes:
+    "":
+      {}

@@ -1,6 +1,3 @@
-import { Interactable } from "SpectaclesInteractionKit/Components/Interaction/Interactable/Interactable";
-import { InteractorEvent } from "SpectaclesInteractionKit/Core/Interactor/InteractorEvent";
-import { SIK } from "SpectaclesInteractionKit/SIK";
 import { TextToSpeechOpenAI } from "./TextToSpeechOpenAI";
 
 @component
@@ -8,32 +5,15 @@ export class VisionOpenAI extends BaseScriptComponent {
   @input textInput: Text;
   @input textOutput: Text;
   @input image: Image;
-  @input interactable: Interactable;
+  // @input interactable: Interactable;
   @input ttsComponent: TextToSpeechOpenAI;
 
-  apiKey: string = "Insert your Open AI Key";
+  apiKey: string = "";
 
   // Remote service module for fetching data
   private remoteServiceModule: RemoteServiceModule = require("LensStudio:RemoteServiceModule");
 
-  private isProcessing: boolean = false;
-
-  onAwake() {
-    this.createEvent("OnStartEvent").bind(() => {
-      this.onStart();
-    });
-  }
-
-  onStart() {
-    let interactionManager = SIK.InteractionManager;
-
-    // Define the desired callback logic for the relevant Interactable event.
-    let onTriggerEndCallback = (event: InteractorEvent) => {
-      this.handleTriggerEnd(event);
-    };
-
-    this.interactable.onInteractorTriggerEnd(onTriggerEndCallback);
-  }
+  public isProcessing: boolean = false;
 
   async handleTriggerEnd(eventData) {
     if (this.isProcessing) {

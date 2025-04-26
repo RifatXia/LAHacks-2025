@@ -7,7 +7,11 @@
     - !<own> ed2ae14b-585f-42fe-b0e9-5812ff5d0f48
     - !<own> b3ff0a00-1082-433e-8710-6121cb60e5e1
     - !<own> 2d3a864c-e9bf-4d9a-b3a9-237589e280eb
-    - !<own> 377eb135-cecf-4abb-94e8-6235253fdd07
+    - !<own> aa97f055-dee9-44fc-b934-d2b0ddbd399a
+    - !<own> 1fe56ffe-8413-4ffe-99be-b187ffc47200
+    - !<own> a72dd65f-e920-4c31-9a6d-f0a7f7edb301
+    - !<own> 77a02b06-1e8b-40c7-832c-5772c5299738
+    - !<own> ac204754-7d9e-4e06-8782-ca382012e450
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -512,6 +516,21 @@
     - !<own> f969926e-9bf3-4be9-af2d-bb6be4d5e184
   Components:
     []
+- !<SceneObject/1fe56ffe-8413-4ffe-99be-b187ffc47200>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 0.000000, y: 0.000000, z: 0.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b6830d7b-c60d-4eb4-9694-c48f8572cdd0
 - !<SceneObject/20357b6d-6d27-40b3-98e1-27d01bf89eaa>
   PrefabRemaps:
     []
@@ -586,6 +605,24 @@
     - !<own> eb0acfe9-cf8f-45e7-9c46-1c986e040bcd
   Components:
     []
+- !<ScriptComponent/282fa655-0781-451e-a246-b85b48cd1839>
+  PrefabRemaps:
+    []
+  Name: ActivateSnappy
+  Enabled: true
+  ScriptAsset: !<reference> c2de272c-2e7c-4ea2-9545-806e23a7cc3c
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      textInput: !<reference.Text> 6276b69e-3cbe-4611-9b22-e77095f9094b
+      textOutput: !<reference.Text> 3142c4e0-b39d-4e77-8b2c-cd27e33a6ac8
+      visionOpenAIScript: !<MappingBased.VisionOpenAI> e64f875a-b50f-4aba-8953-4bb95f77f867
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/29c1528f-1a6b-4fed-a5a8-2bea3fd01b69>
   PrefabRemaps:
     []
@@ -782,6 +819,21 @@
     []
   Components:
     - !<own> 48f57ffa-6f74-46f8-a2ea-df9ab6b34a85
+- !<SceneObject/35781463-1ba1-4675-ae5e-430e3c951a17>
+  PrefabRemaps:
+    []
+  Name: VisionGemini Controller
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e64f875a-b50f-4aba-8953-4bb95f77f867
 - !<SceneObject/35a35cda-f65e-4e22-9540-c4b8398d942b>
   PrefabRemaps:
     []
@@ -825,21 +877,6 @@
   ScriptTypes:
     "":
       {}
-- !<SceneObject/377eb135-cecf-4abb-94e8-6235253fdd07>
-  PrefabRemaps:
-    []
-  Name: VisionGemini
-  Enabled: false
-  Layers: 1
-  LocalTransform:
-    position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    hasSegmentScaleCompensation: false
-  Children:
-    - !<own> cd5b6087-de18-435c-a7c3-2d0d4fd46c57
-  Components:
-    []
 - !<SceneObject/38c0ec38-9476-4a18-81f1-e20750569b79>
   PrefabRemaps:
     []
@@ -1192,30 +1229,6 @@
   ScriptTypes:
     "":
       {}
-- !<ScriptComponent/493adab8-23e0-49f6-9b5c-d75eebb8d7ce>
-  PrefabRemaps:
-    []
-  Name: VisionOpenAI
-  Enabled: true
-  ScriptAsset: !<reference> 2681c502-e9b2-452f-8946-e247b26aeecc
-  ScriptInputsDefault:
-    textInput: true
-    textOutput: true
-    image: true
-    interactable: true
-    ttsComponent: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      textInput: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      textOutput: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      image: !<reference.Image> 00000000-0000-0000-0000-000000000000
-      interactable: !<MappingBased.Interactable> 00000000-0000-0000-0000-000000000000
-      ttsComponent: !<MappingBased.TextToSpeechOpenAI> 00000000-0000-0000-0000-000000000000
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/4b4305ef-1bba-4d64-9e67-516d9b6faf13>
   PrefabRemaps:
     []
@@ -1463,6 +1476,82 @@
   ScriptTypes:
     "":
       {}
+- !<Text/6276b69e-3cbe-4611-9b22-e77095f9094b>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: "What is you see?"
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 48
+  Font: !<reference> 00000000-0000-0000-0000-000000000000
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
 - !<SceneObject/64357d48-d878-4a81-b0fd-993bc1ba362e>
   PrefabRemaps:
     []
@@ -1749,6 +1838,22 @@
     - !<own> 42f01260-f92a-49b1-9fb2-fbbbb72abb94
   Components:
     []
+- !<SceneObject/77a02b06-1e8b-40c7-832c-5772c5299738>
+  PrefabRemaps:
+    - 77a02b06-1e8b-40c7-832c-5772c5299738: be97f608-d5a2-426e-9f1a-9993f202a82d
+    - 9a13d288-3c67-4bee-995c-063c3135356f: fe66b212-969c-46ca-9458-49331fddccf6
+  Name: CameraFeedHandler
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9fa3d5f6-7510-4da4-9d79-58d5c51ae263
 - !<SceneObject/77b20fbc-1c51-4a6d-b6f2-3db226ed9464>
   PrefabRemaps:
     []
@@ -2008,6 +2113,21 @@
     - !<own> 34577044-ef77-457d-ba50-ca995e0f12ef
   Components:
     []
+- !<SceneObject/9542b535-979f-4bd2-b17e-fcbb7261448e>
+  PrefabRemaps:
+    []
+  Name: Snappy Controller
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 282fa655-0781-451e-a246-b85b48cd1839
 - !<SceneObject/95ae3bb9-dd3c-45a7-971d-6eae9c7936f4>
   PrefabRemaps:
     []
@@ -2131,6 +2251,22 @@
   Components:
     - !<own> 3142c4e0-b39d-4e77-8b2c-cd27e33a6ac8
     - !<own> 32fbceeb-25df-43a9-b340-1624f1eb89d2
+- !<ScriptComponent/9fa3d5f6-7510-4da4-9d79-58d5c51ae263>
+  PrefabRemaps:
+    []
+  Name: CameraAPI
+  Enabled: true
+  ScriptAsset: !<reference> df872fa6-dd13-44b9-8480-4ad64e1d27bd
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      uiImage: !<reference.Image> b6830d7b-c60d-4eb4-9694-c48f8572cdd0
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/9fff4510-bcdd-4fba-98ce-81e08c9532f0>
   PrefabRemaps:
     []
@@ -2341,6 +2477,23 @@
     - !<own> 06b4b050-b87f-4d5e-bba1-372a3124272a
   Components:
     []
+- !<SceneObject/a72dd65f-e920-4c31-9a6d-f0a7f7edb301>
+  PrefabRemaps:
+    - 35781463-1ba1-4675-ae5e-430e3c951a17: 8ece27c5-432d-45cc-af6e-99bf535ea533
+    - a72dd65f-e920-4c31-9a6d-f0a7f7edb301: dce3477c-21ca-402d-93e9-3ad51f1268aa
+    - e64f875a-b50f-4aba-8953-4bb95f77f867: facddee2-99d4-4714-b8e3-fad563b2e665
+  Name: VisionGemini
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 35781463-1ba1-4675-ae5e-430e3c951a17
+  Components:
+    []
 - !<SceneObject/a776efba-3825-47fc-8f6b-9727780536bc>
   PrefabRemaps:
     []
@@ -2415,6 +2568,38 @@
     hasSegmentScaleCompensation: false
   Children:
     []
+  Components:
+    []
+- !<SceneObject/aa97f055-dee9-44fc-b934-d2b0ddbd399a>
+  PrefabRemaps:
+    []
+  Name: InputText
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 0.000000, y: 0.000000, z: 0.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 6276b69e-3cbe-4611-9b22-e77095f9094b
+- !<SceneObject/ac204754-7d9e-4e06-8782-ca382012e450>
+  PrefabRemaps:
+    - 282fa655-0781-451e-a246-b85b48cd1839: 6ac6c8c2-6a7c-4104-980b-c203c0e0e7ba
+    - 9542b535-979f-4bd2-b17e-fcbb7261448e: dde29e90-144a-45cb-9be9-0d6208091373
+    - ac204754-7d9e-4e06-8782-ca382012e450: 28ae4c3b-13ce-4471-8fba-29ac886c9da4
+  Name: Snappy
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 9542b535-979f-4bd2-b17e-fcbb7261448e
   Components:
     []
 - !<SceneObject/ac404be1-b180-4638-b797-5589862136e2>
@@ -2526,6 +2711,25 @@
     - !<own> 97ca7b6f-0923-473b-8d03-5e93bca23136
   Components:
     []
+- !<Image/b6830d7b-c60d-4eb4-9694-c48f8572cdd0>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> af2c130f-5ead-4a5c-b22b-a04a28b9ef68
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/b6cb7074-5b59-4fe6-8fe9-261f4ace7a46>
   PrefabRemaps:
     []
@@ -2782,21 +2986,6 @@
     - !<own> 4d7b0dc7-d92f-4658-a8e9-ad1e683d29c4
   Components:
     []
-- !<SceneObject/cd5b6087-de18-435c-a7c3-2d0d4fd46c57>
-  PrefabRemaps:
-    []
-  Name: VisionGemini Controller
-  Enabled: true
-  Layers: 1
-  LocalTransform:
-    position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    hasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 493adab8-23e0-49f6-9b5c-d75eebb8d7ce
 - !<RenderMeshVisual/cea956be-f6dd-4e5c-a532-09f2387d4001>
   PrefabRemaps:
     []
@@ -3072,6 +3261,25 @@
     InvertRotation: false
   SurfaceOptions: !<SurfaceOptions>
     EnhanceWithNativeAR: false
+- !<ScriptComponent/e64f875a-b50f-4aba-8953-4bb95f77f867>
+  PrefabRemaps:
+    []
+  Name: VisionOpenAI
+  Enabled: true
+  ScriptAsset: !<reference> 2681c502-e9b2-452f-8946-e247b26aeecc
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      textInput: !<reference.Text> 6276b69e-3cbe-4611-9b22-e77095f9094b
+      textOutput: !<reference.Text> 3142c4e0-b39d-4e77-8b2c-cd27e33a6ac8
+      image: !<reference.Image> b6830d7b-c60d-4eb4-9694-c48f8572cdd0
+      ttsComponent: !<MappingBased.TextToSpeechOpenAI> aea51dca-676c-4782-a2ed-e6193c4ba21e
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e69cc9b5-e4df-4912-9e0e-72d7c62e81b6>
   PrefabRemaps:
     []
