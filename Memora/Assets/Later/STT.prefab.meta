@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/cf0c498e-13a8-4ded-aa50-6d42c4f6b297>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> 45874c60-fc2e-4410-88b4-9c512c4a54d9
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> 45874c60-fc2e-4410-88b4-9c512c4a54d9
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> 2c27d51f-7e58-4b39-b5e4-4e7bbf2a867c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ObjectPrefab/00cc4a35-b724-4903-8895-32a8f6dff59e>
+  PackagePath: ""
+  objects:
+    - !<own> 54e09769-5085-4843-8fb0-8c9ec206781e
+  LazyLoading: false
+  RetainAssets: true
+- !<ScriptComponent/19bc34b1-97f5-4d52-8ecc-d420feb03a25>
+  PrefabRemaps:
+    []
+  Name: SpeechToText
+  Enabled: true
+  ScriptAsset: !<reference> 8918faf0-e209-4f8a-866e-10f0c6f03582
+  ScriptInputsDefault:
+    text: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      text: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}
+- !<ObjectPrefabAssetData/2c27d51f-7e58-4b39-b5e4-4e7bbf2a867c>
+  SourceRemaps:
+    - 3764fdb4-5942-4e29-9760-e255c9d9e7a5: 19bc34b1-97f5-4d52-8ecc-d420feb03a25
+    - 45874c60-fc2e-4410-88b4-9c512c4a54d9: 00cc4a35-b724-4903-8895-32a8f6dff59e
+    - bb81d63b-68af-403b-936c-191ef66db9e2: 54e09769-5085-4843-8fb0-8c9ec206781e
+  SourceState: !<own> 00cc4a35-b724-4903-8895-32a8f6dff59e
+- !<SceneObject/54e09769-5085-4843-8fb0-8c9ec206781e>
+  PrefabRemaps:
+    []
+  Name: STT
+  Enabled: false
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 19bc34b1-97f5-4d52-8ecc-d420feb03a25

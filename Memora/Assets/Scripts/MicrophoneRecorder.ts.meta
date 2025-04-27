@@ -1,0 +1,45 @@
+- !<AssetImportMetadata/9ee935e1-b226-465f-a6a8-9be8d7e24cfb>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 92bbf6c7-089c-43f6-8d80-51d38b83e17c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 92bbf6c7-089c-43f6-8d80-51d38b83e17c
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 78af4b02-73f6-45b9-9586-f26ead505ab2
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/78af4b02-73f6-45b9-9586-f26ead505ab2>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 45d73237-72ff-4462-a365-6f62f5c3539b
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    audioOutput: false
+    debugText: false
+    microphoneAsset: false
+  ScriptTypesHidden:
+    {}
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  DefaultScriptInputs:
+    - microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      audioOutput: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      debugText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Asset.AudioTrackAsset microphoneAsset
+    - // @input Asset.AudioTrackAsset audioOutput
+    - // @input Component.Text debugText

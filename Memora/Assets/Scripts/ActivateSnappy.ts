@@ -32,13 +32,16 @@ onListenUpdate = (eventData: VoiceML.ListeningUpdateEventArgs) => {
       }
   
       if (!this.isWaitingForUserPrompt) {
-        if (transcript.includes("hello snappy") || transcript.includes("hello, snappy")) {
+        if (transcript.includes("hello snappy") || transcript.includes("hello, snappy") || transcript.includes("hey snappy") || transcript.includes("hey, snappy")) {
           print("Wake word detected! Listening for user command...");
           this.isWaitingForUserPrompt = true;
   
           if (this.textOutput) {
             this.textOutput.text = "Listening...";
           }
+        } else if (transcript.includes("show family")){
+          print("Showing family");
+          
         }
       } else {
         if (transcript.trim() === "") {

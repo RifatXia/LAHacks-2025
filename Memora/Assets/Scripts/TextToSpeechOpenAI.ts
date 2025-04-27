@@ -15,13 +15,11 @@ export class TextToSpeechOpenAI extends BaseScriptComponent {
   )
   voice: string = "alloy"; // Default voice selection
 
-  apiKey: string = "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";
-
   // Remote service module for fetching data
   private remoteServiceModule: RemoteServiceModule = require("LensStudio:RemoteServiceModule");
 
   onAwake() {
-    if (!this.remoteServiceModule || !this.audioComponent || !this.apiKey) {
+    if (!this.remoteServiceModule || !this.audioComponent) {
       print("Remote Service Module, Audio Component, or API key is missing.");
       return;
     }
@@ -43,20 +41,19 @@ export class TextToSpeechOpenAI extends BaseScriptComponent {
     }
 
     try {
-      const requestPayload = {
-        model: "tts-1",
-        voice: this.voice,
-        input: inputText,
-        response_format: "pcm",
-      };
-
-      const request = new Request("https://api.openai.com/v1/audio/speech", {
+      // const requestPayload = {
+      //   model: "tts-1",
+      //   voice: this.voice,
+      //   input: inputText,
+      //   response_format: "pcm",
+      // };
+      print("Gonna calll now")
+      const request = new Request("https://4449-164-67-70-232.ngrok-free.app/tts", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(requestPayload),
+        body: JSON.stringify({text: inputText}),
       });
 
       print("Sending request to OpenAI...");
