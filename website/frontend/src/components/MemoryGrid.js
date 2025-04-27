@@ -171,7 +171,7 @@ const MemoryGrid = () => {
     <div style={pageStyle}>
       <div style={headerStyle}>
         <h2 style={headerTitleStyle}>Memories</h2>
-        <p style={quoteStyle}>"The palest ink is better than the best memory."</p>
+        <p style={quoteStyle}>"Nothing is ever really lost to us as long as we remember it."</p>
       </div>
       
       <div style={gridStyle}>
