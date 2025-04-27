@@ -25,7 +25,7 @@ MemoAR consists of two powerful parts:
 - **Conversational Support:** Snapy can chat, answer questions, and help users recall details, people, and places—making every interaction supportive and meaningful.
 
 ### 2. **Web Portal**
-- **Tech Stack:** React, Tailwind CSS, hosted at [memoar.us](https://memoar.us)
+- **Tech Stack:** React, Tailwind CSS
 - **Memory Upload:** Users and families can upload photos, diary entries, voice/video clips, or songs—each with a description or story.
 - **Connection Training:** Upload 5 photos of each loved one to train the AR's face recognition model.
 - **Chat History:** Review past conversations with Snapy, your AI companion in AR.
@@ -56,7 +56,7 @@ Dementia can make even the closest faces and dearest moments hard to recall. Mem
 - **Frontend:** React, Tailwind CSS
 - **Backend:** Python, FastAPI, Uvicorn
 - **Database:** MongoDB Atlas
-- **Domain:** GoDaddy ([memoar.us](https://memoar.us))
+- **Domain:** GoDaddy 
 
 ---
 
@@ -111,7 +111,7 @@ If you've ever forgotten a face, a moment, or a song that once meant everything,
 
 ## 📬 Contact
 
-For questions, contributions, or to share your story, visit [memoar.us](https://memoar.us) or open an issue on this repository.
+For questions, contributions, or to share your story open an issue on this repository.
 
 ---
 
