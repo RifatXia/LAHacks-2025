@@ -1,2 +1,3 @@
 .env
 lahacks2025
+*.pyc
