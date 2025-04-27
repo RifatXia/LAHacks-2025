@@ -1,6 +1,11 @@
 import os
 import numpy as np
 import cv2
+import ssl
+
+# Fix SSL certificate verification issues
+ssl._create_default_https_context = ssl._create_unverified_context
+
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.preprocessing import image as keras_image
 from numpy.linalg import norm
