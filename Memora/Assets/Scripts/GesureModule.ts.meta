@@ -1,0 +1,45 @@
+- !<AssetImportMetadata/1b9a8aa3-a088-46b1-80ef-fecced762974>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 14e4cf58-1a76-4397-8a7a-2b11b8e548e9
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 14e4cf58-1a76-4397-8a7a-2b11b8e548e9
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2d563a52-4b90-4300-87c1-9eb4d228096e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2d563a52-4b90-4300-87c1-9eb4d228096e>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 92eb744a-a450-4242-981c-8a8a9bdf4d00
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    image: false
+    imageCarousel: false
+    textComponent: false
+  ScriptTypesHidden:
+    {}
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  DefaultScriptInputs:
+    - textComponent: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      imageCarousel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      image: !<reference.Image> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Component.Text textComponent
+    - // @input SceneObject imageCarousel
+    - // @input Component.Image image
