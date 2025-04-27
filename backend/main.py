@@ -17,7 +17,7 @@
 # except Exception as e:
 #     print(e)
 
-from fastapi import FastAPI, Request, UploadFile, File, HTTPException
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException, Form
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -28,11 +28,13 @@ import pytz
 from io import BytesIO
 import openai
 from face_recognition_utils import recognize_face_from_bytes
-from process import find_most_similar
+from second_face_reco import find_best_match
 from groq import Groq
 import requests
 import base64
 import json
+from db import get_db
+import dateutil.parser
 
 # Load environment variables from a .env file (for API key)
 load_dotenv()
@@ -201,7 +203,7 @@ async def recognize_image(file: UploadFile = File(...)):
 async def process_image(file: UploadFile = File(...)):
     try:
         image_bytes = await file.read()
-        result = find_most_similar(image_bytes)
+        result = find_best_match(image_bytes)
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Processing error: {str(e)}")
@@ -225,3 +227,48 @@ async def text_to_speech(request: Request):
     else:
         # If TTS generation failed
         return JSONResponse(content={"error": "Failed to generate speech"}, status_code=500)
+
+@app.get("/get_memory")
+async def get_memory():
+    db = get_db("memory_db")
+    memories = list(db.memories.find({}, {"_id": 0}))
+    # Ensure date is only YYYY-MM-DD in the response
+    for mem in memories:
+        if "date" in mem:
+            try:
+                # If date is in ISO format, extract only the date part
+                mem["date"] = mem["date"][:10]
+            except Exception:
+                pass
+    return JSONResponse(content=memories)
+
+@app.post("/set_memory")
+async def set_memory(
+    file: UploadFile = File(...),
+    date: str = Form(...),
+    description: str = Form(...)
+):
+    db = get_db("memory_db")
+    file_bytes = await file.read()
+    file_b64 = base64.b64encode(file_bytes).decode("utf-8")
+    file_type = file.content_type
+
+    # Improved date parsing, store only the date part
+    try:
+        # Try ISO first, then fallback to dateutil.parser
+        try:
+            parsed_date = datetime.fromisoformat(date)
+        except Exception:
+            parsed_date = dateutil.parser.parse(date)
+        date_str = parsed_date.date().isoformat()  # Only YYYY-MM-DD
+    except Exception:
+        return JSONResponse(content={"error": "Invalid date format. Use YYYY-MM-DD or ISO format."}, status_code=400)
+
+    memory_doc = {
+        "file": file_b64,
+        "file_type": file_type,
+        "date": date_str,  # Only the date part
+        "description": description
+    }
+    db.memories.insert_one(memory_doc)
+    return JSONResponse(content={"message": "Memory saved successfully."})
