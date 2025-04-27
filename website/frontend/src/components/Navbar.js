@@ -18,7 +18,7 @@ const Navbar = ({ activePage, onPageChange }) => {
           color: '#000',
           fontStyle: 'italic',
           fontWeight: 'bold'
-        }}>Mnemosyne</h1>
+        }}>MemoAR</h1>
       </div>
       <ul style={{
         display: 'flex',

@@ -4,17 +4,11 @@ import memo1 from '../assets/memo1.jpg';
 const ProfilePage = () => {
   const [user, setUser] = useState({
     name: 'Ethan Mitchell',
-    email: 'ethan.mitchell@example.com',
+    email: 'ethan.mitchell@gmail.com',
     age: 63,
     gender: 'Male',
-    joinDate: 'January 15, 2025',
     profilePicture: memo1,
-    bio: 'Software developer with over 30 years of experience. I enjoy listening to podcasts during my commute and working on side projects in the evening.',
-    stats: {
-      memories: 24,
-      connections: 12,
-      conversations: 37
-    }
+    bio: 'Software developer with over 30 years of experience. I enjoy listening to podcasts during my commute and working on side projects in the evening.'
   });
   
   const [schedule, setSchedule] = useState([
@@ -191,28 +185,6 @@ const ProfilePage = () => {
     margin: '0 0 0.5rem 0'
   };
 
-  const statContainerStyle = {
-    display: 'flex',
-    justifyContent: 'space-around',
-    textAlign: 'center',
-    marginTop: '1rem'
-  };
-
-  const statItemStyle = {
-    padding: '0.5rem'
-  };
-
-  const statNumberStyle = {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    color: '#4a90e2'
-  };
-
-  const statLabelStyle = {
-    fontSize: '0.9rem',
-    color: '#666'
-  };
-
   const sectionTitleStyle = {
     borderBottom: '1px solid #e0e0e0',
     paddingBottom: '0.5rem',
@@ -342,30 +314,13 @@ const ProfilePage = () => {
           />
           <div style={userInfoStyle}>
             <h3 style={nameStyle}>{user.name}</h3>
-            <p>{user.gender}, {user.age} years old</p>
             <p>{user.email}</p>
-            <p>Member since: {user.joinDate}</p>
             <button 
               style={buttonStyle} 
               onClick={toggleEditing}
             >
-              {isEditing ? 'Save Changes' : 'Edit Profile'}
+              {isEditing ? 'Save Profile' : 'Edit Profile'}
             </button>
-          </div>
-        </div>
-
-        <div style={statContainerStyle}>
-          <div style={statItemStyle}>
-            <div style={statNumberStyle}>{user.stats.memories}</div>
-            <div style={statLabelStyle}>Memories</div>
-          </div>
-          <div style={statItemStyle}>
-            <div style={statNumberStyle}>{user.stats.connections}</div>
-            <div style={statLabelStyle}>Connections</div>
-          </div>
-          <div style={statItemStyle}>
-            <div style={statNumberStyle}>{user.stats.conversations}</div>
-            <div style={statLabelStyle}>Conversations</div>
           </div>
         </div>
       </div>
@@ -408,14 +363,18 @@ const ProfilePage = () => {
           </div>
           <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="gender">Gender</label>
-            <input 
-              type="text" 
+            <select 
               id="gender" 
               name="gender" 
               value={editForm.gender} 
               onChange={handleChange} 
-              style={inputStyle} 
-            />
+              style={inputStyle}
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
           </div>
           <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="bio">Bio</label>
@@ -431,7 +390,11 @@ const ProfilePage = () => {
       ) : (
         <div style={sectionStyle}>
           <h3 style={sectionTitleStyle}>About Me</h3>
-          <p>{user.bio}</p>
+          <div style={fieldGroupStyle}>
+            <p><strong>Age:</strong> {user.age}</p>
+            <p><strong>Gender:</strong> {user.gender}</p>
+            <p><strong>Bio:</strong> {user.bio}</p>
+          </div>
         </div>
       )}
 
