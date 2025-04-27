@@ -79,7 +79,7 @@ const ConnectionUpload = ({ onAdd, onCancel }) => {
     });
 
     try {
-      const response = await fetch('https://4449-164-67-70-232.ngrok-free.app/set_connection', {
+      const response = fetch('https://4449-164-67-70-232.ngrok-free.app/set_connection', {
         method: 'POST',
         body: formData
       });
