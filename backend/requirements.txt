@@ -9,3 +9,4 @@ deepface
 pillow
 scipy
 numpy
+groq

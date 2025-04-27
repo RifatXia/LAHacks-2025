@@ -25,11 +25,12 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 import pytz
-from gtts import gTTS
 from io import BytesIO
 import openai
 from face_recognition_utils import recognize_face_from_bytes
 from process import find_most_similar
+from groq import Groq
+import requests
 
 # Load environment variables from a .env file (for API key)
 load_dotenv()
@@ -69,6 +70,11 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY environment variable not set.")
 
+groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    raise RuntimeError("GROQ_API_KEY environment variable not set.")
+
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-2.0-flash')
 
@@ -78,11 +84,44 @@ app = FastAPI()
 # Define the request body structure using Pydantic
 class ChatMessage(BaseModel):
     message: str
+    tts: bool = False
+
+# --- TTS with Groq ---
+def generate_speech_with_groq(text: str):
+    headers = {
+        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Content-Type": "application/json",
+    }
+
+    # PlayAI is a good general purpose voice
+    data = {
+        "model": "playai-tts",
+        "voice": "Arista-PlayAI",
+        "input": text,
+        "response_format": "wav"
+    }
+
+    try:
+        response = requests.post(
+            "https://api.groq.com/openai/v1/audio/speech",
+            headers=headers,
+            json=data
+        )
+
+        if response.status_code == 200:
+            return response.content
+        else:
+            print(f"Error with TTS: {response.status_code} - {response.text}")
+            return None
+    except Exception as e:
+        print(f"Exception in TTS: {e}")
+        return None
 
 # --- Chatbot Endpoint ---
 @app.post("/chat")
 async def chat_endpoint(chat_message: ChatMessage):
     user_message = chat_message.message
+    tts_requested = chat_message.tts
 
     if not user_message:
         return JSONResponse(content={"response": "Please provide a message."}, status_code=400)
@@ -119,7 +158,17 @@ User Question: {user_message}
         else:
             bot_response = "Sorry, I couldn't generate a response for that. Can you ask in a different way?"
 
-        return JSONResponse(content={"response": bot_response})
+        # If TTS is requested, handle it
+        if tts_requested:
+            # Don't include the text in the URL since we'll use POST
+            response_dict = {
+                "response": bot_response,
+                "audio_url": "/tts",  # Just the endpoint
+                "audio_text": bot_response  # Include the text separately
+            }
+            return JSONResponse(content=response_dict)
+        else:
+            return JSONResponse(content={"response": bot_response})
 
     except Exception as e:
         print(f"Error during LLM call: {e}")
@@ -142,3 +191,20 @@ async def process_image(file: UploadFile = File(...)):
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Processing error: {str(e)}")
+    
+# --- TTS Endpoint ---
+@app.post("/tts")
+async def text_to_speech(request: Request):
+    # Parse the JSON body
+    data = await request.json()
+    text = data.get("text")
+    
+    if not text:
+        return JSONResponse(content={"error": "No text provided"}, status_code=400)
+    
+    audio_data = generate_speech_with_groq(text)
+    
+    if audio_data:
+        return StreamingResponse(BytesIO(audio_data), media_type="audio/wav")
+    else:
+        return JSONResponse(content={"error": "Failed to generate speech"}, status_code=500)
