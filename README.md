@@ -1,68 +1,47 @@
 # MemoAR
 
-An augmented-reality system to help people living with dementia recapture and revisit precious memories—just like the song in *Coco*, “Remember Me.”
+An augmented-reality system to help people with dementia recapture and revisit precious memories—just like the song in *Coco*, “Remember Me.”
 
----
+## Overview
 
-## Table of Contents
+MemoAR consists of two parts:
 
-- [About](#about)  
-- [Key Features](#key-features)  
-- [Architecture](#architecture)  
-- [Tech Stack](#tech-stack)  
-- [Getting Started](#getting-started)  
-  - [Website (Frontend)](#website-frontend)  
-  - [Backend API](#backend-api)  
-  - [Snapchat AR Lens](#snapchat-ar-lens)  
-- [Usage Guide](#usage-guide)  
-- [Contributing](#contributing)  
-- [License](#license)  
+1. **AR Lens**  
+   - Built in Snapchat Lens Studio with JavaScript/TypeScript  
+   - Runs on Snapchat’s newest Spectacles  
+   - Detects a left-hand fist gesture to “pop up” memory capsules  
+   - Invokes **Snapy**, an AI agent (Google Gemini 2.5 Pro) that listens for “Hello, Snapy,” answers questions, describes the environment, and cues memory prompts  
 
----
-
-## About
-
-MemoAR is an AR-powered companion designed for people with memory loss. Inspired by *Coco*—where Abuelita remembers her father whenever she hears that song—MemoAR ensures “nothing is ever really lost to us as long as we remember it.” Users store photos, voice clips, diary entries, even favorite songs in our web portal; then, in the real world, they simply make a fist gesture in front of Snapchat’s latest Spectacles and watch their memories reappear. An AI guide named **Snapy** greets “Hello, Snapy” to assist with environmental context, memory prompts, or friendly conversation in real time.
-
----
+2. **Web Portal**  
+   - Built with React and Tailwind CSS  
+   - Allows users to upload memories (photos, diary entries, voice/video clips, songs)  
+   - Users supply five photos of each loved one; a lightweight CV model learns to recognize them in AR  
+   - Stores everything securely in MongoDB Atlas  
+   - Provides a chat history interface with Snapy  
 
 ## Key Features
 
-- **Memory Capsules**  
-  - Text notes, images, voice snippets, short video clips, or music tracks “pinned” to real-world locations  
-  - Attach a diary entry or description to each memory  
+- **Memory Capsules**: Text, images, audio, video, or music tracks “anchored” to the real world  
+- **Face-Aware Anchoring**: Train on just five photos per person to recognize friends/family in AR  
+- **Gesture-Driven Recall**: Left-hand fist reveals anchored memories  
+- **AI Agent (Snapy)**: Conversational assistant powered by Gemini 2.5 Pro  
+- **Cross-Platform**: Spectacles AR lens + web portal (memoar.us)  
 
-- **Face-Aware Anchoring**  
-  - Upload five photos of loved ones; our lightweight computer-vision model learns to recognize family & friends  
+## Tech Stack
 
-- **Interactive AR Agent (Snapy)**  
-  - Built on Google’s Gemini 2.5 Pro LLM  
-  - Listens for “Hello, Snapy” and answers questions, describes the environment, or cues memory triggers  
+- **AR Lens**: Snapchat Lens Studio (JS/TS)  
+- **AI Agent**: Google Gemini 2.5 Pro  
+- **CV Model**: TensorFlow Lite (face recognition)  
+- **Web Frontend**: React, Tailwind CSS  
+- **Backend**: Python, FastAPI, Uvicorn  
+- **Database**: MongoDB Atlas  
+- **Domain**: GoDaddy (memoar.us)  
 
-- **Gesture-Driven Recall**  
-  - Left-hand fist gesture triggers stored memories to pop into view  
+## Getting Started
 
-- **Cross-Platform Ecosystem**  
-  - AR Lens Studio for Spectacles (JS/TS)  
-  - React + Tailwind CSS web portal  
-  - MongoDB for secure memory storage  
+### Web Portal
 
----
-
-## Architecture
-
-```mermaid
-flowchart LR
-  subgraph Web Portal
-    A[React Frontend] --> B[Backend API (FastAPI)]
-    B --> C[MongoDB]
-  end
-
-  subgraph AR Experience
-    D[Lens Studio (JS/TS)] --> E[Gemini 2.5 Pro Agent]
-    E --> F[CV Model (Family Faces)]
-    E --> C
-  end
-
-  A -->|Uploads & Fetches| C
-  D -->|Fetch Anchors & Memories| B
+```bash
+cd website/frontend
+npm install
+npm start
