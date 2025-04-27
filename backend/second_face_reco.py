@@ -29,7 +29,6 @@ except IOError:
     FONT = ImageFont.load_default()
 
 # --- Function to Calculate Distance ---
-# (Same as before)
 def calculate_distance(embedding1, embedding2, metric):
     if metric == 'cosine':
         return cosine(embedding1, embedding2)
@@ -43,7 +42,7 @@ def calculate_distance(embedding1, embedding2, metric):
         raise ValueError(f"Unsupported distance metric: {metric}")
 
 # --- Function to Find Best Match in Database ---
-def find_best_match(target_embedding, known_embeddings, known_names, metric, threshold):
+def _find_best_match(target_embedding, known_embeddings, known_names, metric, threshold):
     """Compares target embedding to all known embeddings and returns the best match."""
     min_dist = float('inf')
     best_match_name = "Unknown"
@@ -161,7 +160,7 @@ if __name__ == "__main__":
 
                 # Find the best match in the database
                 start_time_match = time.time()
-                name, min_distance = find_best_match(
+                name, min_distance = _find_best_match(
                     test_embedding,
                     known_embeddings,
                     known_names,
@@ -196,3 +195,52 @@ if __name__ == "__main__":
         print(f"Annotated image saved to: {OUTPUT_IMAGE_PATH}")
 
     print("Test finished.")
+
+def find_best_match(image_path):
+    """
+    Given an image path, detect faces, extract embedding, and find the best match.
+    Returns a dict with the best match name and distance.
+    """
+    # Load known embeddings
+    if not os.path.exists(PKL_FILE_PATH):
+        return {"error": f"Embeddings file not found at '{PKL_FILE_PATH}'"}
+    with open(PKL_FILE_PATH, "rb") as f:
+        known_embeddings_data = pickle.load(f)
+    if not known_embeddings_data:
+        return {"error": "The PKL file is empty or invalid."}
+    known_names = [data[0] for data in known_embeddings_data]
+    known_embeddings = np.array([data[1] for data in known_embeddings_data])
+
+    # Extract faces from the image
+    extracted_faces = DeepFace.extract_faces(
+        img_path=image_path,
+        detector_backend=DETECTOR_BACKEND,
+        enforce_detection=False,
+        align=True
+    )
+    if not extracted_faces:
+        return {"label": "Unknown", "distance": None, "message": "No face detected."}
+
+    # Only process the first detected face
+    face_data = extracted_faces[0]
+    detected_face_img = face_data['face']
+
+    embedding_objs = DeepFace.represent(
+        img_path=detected_face_img,
+        model_name=MODEL_NAME,
+        detector_backend='skip',
+        enforce_detection=False,
+        align=False
+    )
+    if not embedding_objs:
+        return {"label": "Unknown", "distance": None, "message": "Could not get embedding."}
+    test_embedding = np.array(embedding_objs[0]['embedding'])
+
+    name, min_distance = _find_best_match(
+        test_embedding,
+        known_embeddings,
+        known_names,
+        DISTANCE_METRIC,
+        RECOGNITION_THRESHOLD
+    )
+    return {"label": name, "distance": float(min_distance)}

@@ -17,7 +17,7 @@
 # except Exception as e:
 #     print(e)
 
-from fastapi import FastAPI, Request, UploadFile, File, HTTPException, Form
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException, Form, Body
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -28,13 +28,14 @@ import pytz
 from io import BytesIO
 import openai
 from face_recognition_utils import recognize_face_from_bytes
-from second_face_reco import find_best_match
+from face_recognition_utils import find_best_match
 from groq import Groq
 import requests
 import base64
 import json
 from db import get_db
 import dateutil.parser
+from tempfile import NamedTemporaryFile
 
 # Load environment variables from a .env file (for API key)
 load_dotenv()
@@ -200,10 +201,17 @@ async def recognize_image(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Recognition error: {str(e)}")
 
 @app.post("/process")
-async def process_image(file: UploadFile = File(...)):
+async def process_image(payload: dict = Body(...)):
+    print("Received payload:", payload)
     try:
-        image_bytes = await file.read()
-        result = find_best_match(image_bytes)
+        if "file" not in payload:
+            return JSONResponse(content={"error": "Missing 'file' in request body."}, status_code=400)
+        image_b64 = payload["file"]
+        try:
+            image_bytes = base64.b64decode(image_b64)
+        except Exception:
+            return JSONResponse(content={"error": "Invalid base64 encoding."}, status_code=400)
+        result = recognize_face_from_bytes(image_bytes)
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Processing error: {str(e)}")
@@ -272,3 +280,55 @@ async def set_memory(
     }
     db.memories.insert_one(memory_doc)
     return JSONResponse(content={"message": "Memory saved successfully."})
+
+@app.post("/set_connection")
+async def set_connection(
+    image1: UploadFile = File(...),
+    image2: UploadFile = File(...),
+    image3: UploadFile = File(...),
+    image4: UploadFile = File(...),
+    image5: UploadFile = File(...),
+    name: str = Form(...),
+    relation: str = Form(...)
+):
+    db = get_db("memory_db")
+    images = []
+    for img_file in [image1, image2, image3, image4, image5]:
+        img_bytes = await img_file.read()
+        img_b64 = base64.b64encode(img_bytes).decode("utf-8")
+        images.append({
+            "filename": img_file.filename,
+            "content_type": img_file.content_type,
+            "data": img_b64
+        })
+
+    connection_doc = {
+        "name": name,
+        "relation": relation,
+        "images": images
+    }
+    db.connection.insert_one(connection_doc)
+    return JSONResponse(content={"message": "Connection saved successfully."})
+
+@app.get("/get_connection")
+async def get_connection():
+    db = get_db("memory_db")
+    connections = list(db.connection.find({}, {"_id": 0}))
+    result = []
+    for conn in connections:
+        entry = {
+            "name": conn.get("name"),
+            "relation": conn.get("relation"),
+        }
+        images = conn.get("images", [])
+        if images:
+            # Only include the first image's info
+            entry["image"] = {
+                "filename": images[0].get("filename"),
+                "content_type": images[0].get("content_type"),
+                "data": images[0].get("data"),
+            }
+        else:
+            entry["image"] = None
+        result.append(entry)
+    return JSONResponse(content=result)
