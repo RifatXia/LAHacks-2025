@@ -75,6 +75,10 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY environment variable not set.")
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise RuntimeError("OPENAI_API_KEY environment variable not set.")
+
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_API_KEY:
@@ -88,6 +92,8 @@ print(f"ElevenLabs API Key loaded: {ELEVENLABS_API_KEY[:5]}...")
 
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-2.0-flash')
+
+openai.api_key = OPENAI_API_KEY
 
 # --- FastAPI App Setup ---
 app = FastAPI()
@@ -227,11 +233,15 @@ async def text_to_speech(request: Request):
         return JSONResponse(content={"error": "No text provided"}, status_code=400)
     
     # Generate speech with ElevenLabs
-    audio_data = generate_speech_with_elevenlabs(text)
+    response = openai.audio.speech.create(
+        model="tts-1",          # or "tts-1-hd" for higher quality
+        voice="alloy",           # options: "nova", "echo", "onyx", "shimmer", "fable", "alloy"
+        input=text,
+    )
     
-    if audio_data:
+    if response:
         # ElevenLabs returns MP3 format
-        return StreamingResponse(BytesIO(audio_data), media_type="audio/mpeg")
+        return response
     else:
         # If TTS generation failed
         return JSONResponse(content={"error": "Failed to generate speech"}, status_code=500)
