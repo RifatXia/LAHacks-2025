@@ -15,15 +15,46 @@ const ConnectionUpload = ({ onAdd, onCancel }) => {
       newImages[index] = file;
       setImages(newImages);
       
-      // Create a preview URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
+      // Create a compressed preview URL
+      compressImage(file, 800, (compressedDataUrl) => {
         const newPreviewUrls = [...previewUrls];
-        newPreviewUrls[index] = reader.result;
+        newPreviewUrls[index] = compressedDataUrl;
         setPreviewUrls(newPreviewUrls);
-      };
-      reader.readAsDataURL(file);
+      });
     }
+  };
+
+  // Function to compress images before storing them
+  const compressImage = (file, maxWidth, callback) => {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const img = new Image();
+      img.src = event.target.result;
+      
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        // Calculate new dimensions while maintaining aspect ratio
+        if (width > maxWidth) {
+          height = Math.round(height * maxWidth / width);
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Get compressed image as data URL
+        // Adjust quality (0.7 = 70% quality) to balance size and quality
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        callback(compressedDataUrl);
+      };
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = (e) => {

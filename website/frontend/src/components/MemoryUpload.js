@@ -6,6 +6,8 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
   const [previewUrl, setPreviewUrl] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -15,19 +17,60 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
       // Determine file type
       if (selectedFile.type.startsWith('image/')) {
         setFileType('image');
+        // Compress image before preview for images
+        compressImage(selectedFile, 800, (compressedDataUrl) => {
+          setPreviewUrl(compressedDataUrl);
+        });
       } else if (selectedFile.type.startsWith('audio/')) {
         setFileType('audio');
+        // For non-image files, use regular FileReader
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(reader.result);
+        };
+        reader.readAsDataURL(selectedFile);
       } else if (selectedFile.type.startsWith('video/')) {
         setFileType('video');
+        // For non-image files, use regular FileReader
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(reader.result);
+        };
+        reader.readAsDataURL(selectedFile);
       }
-      
-      // Create a preview URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
     }
+  };
+
+  // Function to compress images before storing them
+  const compressImage = (file, maxWidth, callback) => {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const img = new Image();
+      img.src = event.target.result;
+      
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        // Calculate new dimensions while maintaining aspect ratio
+        if (width > maxWidth) {
+          height = Math.round(height * maxWidth / width);
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Get compressed image as data URL (0.7 = 70% quality)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        callback(compressedDataUrl);
+      };
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = (e) => {
@@ -37,12 +80,21 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
       return;
     }
 
-    onAdd({
-      file: previewUrl, // In a real app, you'd upload this to a server
-      fileType,
-      date,
-      description
-    });
+    setIsSubmitting(true);
+    setUploadError(null);
+
+    try {
+      onAdd({
+        file: previewUrl, // Using the compressed version for images
+        fileType,
+        date,
+        description
+      });
+    } catch (error) {
+      console.error('Error adding memory:', error);
+      setUploadError(error.message);
+      setIsSubmitting(false);
+    }
   };
 
   const containerStyle = {
@@ -192,6 +244,17 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
     }
   };
 
+  // Add error message display style
+  const errorStyle = {
+    color: 'red',
+    padding: '0.5rem',
+    marginTop: '1rem',
+    textAlign: 'center',
+    backgroundColor: '#ffeeee',
+    borderRadius: '4px',
+    fontSize: '0.9rem'
+  };
+
   return (
     <div style={containerStyle}>
       <h3 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Add New Memory</h3>
@@ -255,6 +318,12 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
           />
         </div>
 
+        {uploadError && (
+          <div style={errorStyle}>
+            {uploadError}
+          </div>
+        )}
+
         <div style={formGroupStyle}>
           <label htmlFor="date" style={labelStyle}>Date *</label>
           <input 
@@ -283,14 +352,20 @@ const MemoryUpload = ({ onAdd, onCancel }) => {
             type="button" 
             onClick={onCancel} 
             style={cancelButtonStyle}
+            disabled={isSubmitting}
           >
             Cancel
           </button>
           <button 
             type="submit" 
-            style={saveButtonStyle}
+            style={{
+              ...saveButtonStyle,
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+            }}
+            disabled={isSubmitting}
           >
-            Save Memory
+            {isSubmitting ? 'Saving...' : 'Save Memory'}
           </button>
         </div>
       </form>

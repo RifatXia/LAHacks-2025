@@ -15,7 +15,7 @@ const ConnectionCard = ({ connection }) => {
         overflow: 'hidden'
       }}>
         <img 
-          src={connection.images[0]} 
+          src={connection.image} 
           alt={connection.name} 
           style={{
             width: '100%',
