@@ -5,4 +5,8 @@ google-generativeai
 python-dotenv
 pytz
 openai
+deepface
+pillow
+scipy
+numpy
 groq

@@ -17,7 +17,7 @@
 # except Exception as e:
 #     print(e)
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -27,6 +27,8 @@ from datetime import datetime
 import pytz
 from io import BytesIO
 import openai
+from face_recognition_utils import recognize_face_from_bytes
+from process import find_most_similar
 from groq import Groq
 import requests
 
@@ -171,6 +173,24 @@ User Question: {user_message}
     except Exception as e:
         print(f"Error during LLM call: {e}")
         return JSONResponse(content={"response": "Sorry, I encountered an error trying to retrieve that information. Please try again."}, status_code=500)
+
+@app.post("/image")
+async def recognize_image(file: UploadFile = File(...)):
+    try:
+        image_bytes = await file.read()
+        result = recognize_face_from_bytes(image_bytes)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Recognition error: {str(e)}")
+
+@app.post("/process")
+async def process_image(file: UploadFile = File(...)):
+    try:
+        image_bytes = await file.read()
+        result = find_most_similar(image_bytes)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Processing error: {str(e)}")
     
 # --- TTS Endpoint ---
 @app.post("/tts")
