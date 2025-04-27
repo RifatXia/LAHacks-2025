@@ -4,7 +4,7 @@ import memo1 from '../assets/memo1.jpg';
 const ProfilePage = () => {
   const [user, setUser] = useState({
     name: 'Ethan Mitchell',
-    email: 'ethan.mitchell@example.com',
+    email: 'ethan.mitchell@gmail.com',
     age: 63,
     gender: 'Male',
     profilePicture: memo1,
