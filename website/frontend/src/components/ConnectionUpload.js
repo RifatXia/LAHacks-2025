@@ -5,7 +5,6 @@ const ConnectionUpload = ({ onAdd, onCancel }) => {
   const [previewUrls, setPreviewUrls] = useState(['', '', '', '', '']);
   const [name, setName] = useState('');
   const [relationship, setRelationship] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleImageChange = (e, index) => {
@@ -26,26 +25,50 @@ const ConnectionUpload = ({ onAdd, onCancel }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Check if all images are uploaded
     if (images.some(img => img === null)) {
       alert('Please upload all 5 images');
       return;
     }
-    
+
     if (!name || !relationship) {
       alert('Please fill all required fields');
       return;
     }
 
-    onAdd({
-      images: previewUrls, // In a real app, you'd upload these to a server
-      name,
-      relationship,
-      dateOfBirth
+    // Prepare form data
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('relation', relationship);
+    images.forEach((img, idx) => {
+      formData.append(`image${idx + 1}`, img);
     });
+
+    try {
+      const response = await fetch('https://4449-164-67-70-232.ngrok-free.app/set_connection', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save connection');
+      }
+
+      // Optionally, you can get the new connection from the response
+      // const newConnection = await response.json();
+
+      // Call onAdd to update the UI (you may want to refetch or optimistically update)
+      onAdd({
+        images: previewUrls,
+        name,
+        relation: relationship
+      });
+    } catch (error) {
+      alert(error.message || 'Failed to save connection');
+    }
   };
 
   const containerStyle = {
@@ -323,17 +346,6 @@ const ConnectionUpload = ({ onAdd, onCancel }) => {
             required 
             style={inputStyle}
             placeholder="Family member, Friend, etc."
-          />
-        </div>
-
-        <div style={formGroupStyle}>
-          <label htmlFor="dateOfBirth" style={labelStyle}>Date of Birth:</label>
-          <input 
-            type="date" 
-            id="dateOfBirth" 
-            value={dateOfBirth} 
-            onChange={(e) => setDateOfBirth(e.target.value)} 
-            style={inputStyle}
           />
         </div>
 

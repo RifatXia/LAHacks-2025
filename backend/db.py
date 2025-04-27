@@ -1,9 +1,11 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # You can use environment variables for security
-MONGO_URI = os.getenv("MONGO_URI") or "mongodb+srv://rifatxia:hackathon123@cluster0.4alho2f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGO_URI = os.getenv("MONGO_URI") # or "mongodb+srv://rifatxia:Hackathon123@cluster0.4alho2f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 

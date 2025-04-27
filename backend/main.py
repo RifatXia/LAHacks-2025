@@ -342,3 +342,10 @@ async def get_connection():
             entry["image"] = None
         result.append(entry)
     return JSONResponse(content=result)
+
+@app.get("/test_mongo")
+def test_mongo():
+    db = get_db()
+    # Try to list collections
+    collections = db.list_collection_names()
+    return {"collections": collections}

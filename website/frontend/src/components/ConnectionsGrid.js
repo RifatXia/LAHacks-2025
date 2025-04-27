@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ConnectionCard from './ConnectionCard';
 import ConnectionUpload from './ConnectionUpload';
 import memo1 from '../assets/memo1.jpg';
@@ -7,41 +7,47 @@ import memo4 from '../assets/memo4.jpg';
 import memo7 from '../assets/memo7.jpg';
 
 const ConnectionsGrid = () => {
-  const [connections, setConnections] = useState([
-    { 
-      id: 1, 
-      name: 'John Doe', 
-      relationship: 'Father', 
-      dateOfBirth: '1975-06-10',
-      images: [memo1, memo3, memo4, memo7, memo1]
-    },
-    { 
-      id: 2, 
-      name: 'Jane Doe', 
-      relationship: 'Mother', 
-      dateOfBirth: '1978-03-22',
-      images: [memo3, memo4, memo7, memo1, memo3]
-    },
-    { 
-      id: 3, 
-      name: 'Emily Doe', 
-      relationship: 'Sister', 
-      dateOfBirth: '2005-12-15',
-      images: [memo4, memo7, memo1, memo3, memo4]
-    },
-    { 
-      id: 4, 
-      name: 'Max', 
-      relationship: 'Dog', 
-      dateOfBirth: '2018-05-03',
-      images: [memo7, memo1, memo3, memo4, memo7]
-    }
-  ]);
-  
+  const [connections, setConnections] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [selectedConnection, setSelectedConnection] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/get_connection')
+      .then(res => res.json())
+      .then(data => {
+        // Transform API data to match expected structure
+        const transformed = data.map((conn) => {
+          let images = [];
+          if (
+            conn.image &&
+            typeof conn.image.data === 'string' &&
+            conn.image.data.length > 0
+          ) {
+            images = [
+              `data:${conn.image.content_type || 'image/jpeg'};base64,${conn.image.data}`
+            ];
+          }
+          return {
+            name: conn.name,
+            relation: conn.relation,
+            images
+          };
+        });
+        setConnections(transformed);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch connections:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading connections...</div>;
+  }
+
   const addConnection = (newConnection) => {
     const connection = {
       id: Date.now(),
@@ -231,9 +237,35 @@ const ConnectionsGrid = () => {
           <p>Add Connection</p>
         </div>
         
-        {connections.map(connection => (
-          <div key={connection.id} onClick={() => viewConnection(connection)}>
-            <ConnectionCard connection={connection} />
+        {connections.map((conn, idx) => (
+          <div key={idx} style={{
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            padding: '1rem',
+            textAlign: 'center'
+          }}>
+            {conn.images.length > 0 ? (
+              <img
+                src={conn.images[0]}
+                alt={conn.name}
+                style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px' }}
+              />
+            ) : (
+              <div style={{
+                width: '100%',
+                height: '200px',
+                background: '#eee',
+                borderRadius: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#aaa'
+              }}>
+                No Image
+              </div>
+            )}
+            <h3 style={{ margin: '1rem 0 0.5rem 0' }}>{conn.name}</h3>
+            <p style={{ margin: 0, color: '#555' }}>{conn.relation}</p>
           </div>
         ))}
       </div>
@@ -291,7 +323,7 @@ const ConnectionsGrid = () => {
               </div>
               <div style={infoRowStyle}>
                 <span style={infoLabelStyle}>Relationship:</span>
-                <span>{selectedConnection.relationship}</span>
+                <span>{selectedConnection.relation}</span>
               </div>
               <div style={infoRowStyle}>
                 <span style={infoLabelStyle}>Date of Birth:</span>
