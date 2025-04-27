@@ -44,9 +44,9 @@ load_dotenv()
 patient_context = """
 Information about Ethan Mitchell:
 
-Name: Ethan Mitchell
-Gender: Male
-Age: 63 years old
+Ethan Charles Mitchell, 63 years old, male, born June 15, 1961 in Portland, Oregon, USA. Lives in Seattle, Washington. Senior Software Developer at SeattleTech Solutions with 38 years of experience. Diagnosed with early-stage dementia at age 61. Manages mild hypertension with medication (Donepezil, Lisinopril).
+
+Parents: David Mitchell (82, retired school principal), Laura Mitchell (80, retired school principal). Younger sister: Emily Mitchell (55, retired school principal). Owns a 4-year-old Golden Retriever named Max, emotional support pet adopted in 2020.
 
 Daily Schedule:
 6:30 AM - 7:00 AM: Wake up, quick stretching, morning hygiene
@@ -62,12 +62,31 @@ Daily Schedule:
 9:30 PM - 10:00 PM: Prepare for the next day (lay out clothes, light journaling)
 10:00 PM: Sleep
 
-Family Members:
-Father: David Mitchell (82 years old) – Retired School Principal
-Mother: Laura Mitchell (80 years old) – Retired School Principal
-Younger Sister: Emily Mitchell (55 years old) – Retired School Principal
+Education: Lincoln High School (graduated 1979), BS in Computer Science from University of Washington (1983). Career highlight: Led major cloud migration for financial firm in 2015.
 
-Pet: Max (Golden Retriever, 4 years old)
+Important Memories: Childhood camping at Crater Lake, first dog Charlie, solo trip to Japan in 2005 (loved Kyoto gardens), bought first house in Seattle in 1992, ran first half-marathon at 50. Strong family bonds: Weekly Sunday brunches with parents and sister since 2010. Supported parents during health recoveries in 2019 and 2021.
+
+Interests: Sci-Fi novels (Isaac Asimov, Philip K. Dick), indie gaming (favorites: Stardew Valley), open-source coding, woodworking, classic rock music (Led Zeppelin, Fleetwood Mac). Favorite meals: oatmeal with berries, turkey sandwich lunches, salmon dinners.
+
+Memory Anchors: Max is his dog; Emily calls every Thursday; Café Vita is his coffee stop; gym runs happen listening to Led Zeppelin; works near a window desk at SeattleTech; Green Lake Park is favorite for walks.
+
+Weekly Highlights: Trivia nights on Wednesdays, Farmer's Market trips with Max on Saturdays, family brunches on Sundays.
+
+Emergency Contacts:
+-Emily Mitchell (Sister) — Phone: +1 (206) 555-0198
+-Dr. Susan Hale (Primary Doctor) — Phone: +1 (206) 555-0134
+-David and Laura Mitchell (Parents) — Home Phone: +1 (503) 555-0125
+-Safe Words/Phrases (to calm if distressed):
+-"You are safe, Ethan. Max is with you."
+-"You are at home, everything is okay."
+-"Call Emily if you feel confused."
+
+Personality Notes:
+-Calm and logical thinker.
+-Gets anxious if plans change suddenly.
+-Responds well to humor and gentle reassurance.
+-Prefers clear, simple instructions.
+-Appreciates being treated with respect and patience.
 """
 
 # --- LLM Setup ---
